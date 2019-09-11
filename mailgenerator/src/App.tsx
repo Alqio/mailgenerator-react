@@ -4,6 +4,7 @@ import './App.css';
 import {SubTopicProps} from "./types/SubTopic";
 import {Topic} from "./components/Topic";
 import {TopicHook, TopicProps} from "./types/Topic";
+import {AddSubtopic} from "./components/AddSubTopic";
 
 const App: React.FC = () => {
 
@@ -24,7 +25,11 @@ const App: React.FC = () => {
 
     const [topics, setTopics] = useState<Array<TopicProps>>([topic1]);
 
-    const addSubtopic = (id: number) => {
+    const addSubtopic = (event: any) => {
+        event.preventDefault();
+        
+        const id = 0;
+
         const topic = topics[id];
 
         if (topic !== undefined) {
@@ -56,6 +61,9 @@ const App: React.FC = () => {
                 <p>mikä homma</p>
             </header>
 
+            <div>
+                <AddSubtopic onSubmit={addSubtopic}/>
+            </div>
             <div className="mail">
                 <button onClick={() => addSubtopic(0)}>click me mate</button>
                 {generateHtml()}
