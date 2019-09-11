@@ -17,12 +17,12 @@ export const SubTopic = (props: SubTopicProps) => {
 
     return (
         <div>
-            <h1>{name} {(date ? date : "")}</h1>
+            <h2>{name} {(date ? date.toDateString() : "")}</h2>
             <p>{text}</p>
             <br/>
             <br/>
+            <a href={url}>Lue lisää</a>
             <img src={(picture ? picture : "")}/>
-            <a href={url}>{url}</a>
         </div>
     )
 };

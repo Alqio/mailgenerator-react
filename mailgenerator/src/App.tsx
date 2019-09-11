@@ -4,7 +4,6 @@ import './App.css';
 import {SubTopicProps} from "./types/SubTopic";
 import {Topic} from "./components/Topic";
 import {TopicHook, TopicProps} from "./types/Topic";
-import {array} from "prop-types";
 
 const App: React.FC = () => {
 
@@ -12,41 +11,56 @@ const App: React.FC = () => {
         name: "Fuksisitsit",
         text: "Haha tää on muuten ihan hauska tapahtuma kantsii ehdottomasti osallistua koska saa halpaa viinaa ja vaikka mitä",
         date: new Date(),
-        picture: "",
+        picture: "https://tietokilta.fi/page_attachments/0000/0265/otatarhanajot2013_crop.jpg",
         url: "https://tietokilta.fi",
         registration: false
     };
 
+    const topic1: TopicProps = {
+        name: "Kilta",
+        number: 1,
+        subTopics: []
+    };
 
-    const topics = Array<TopicHook>();
-    for (let i = 0; i < 5; i += 1) {
-        const [topic, setTopic] = useState<TopicProps>({name: "name", number: i});
-        topics.push({topic, setTopic});
-    }
+    const [topics, setTopics] = useState<Array<TopicProps>>([topic1]);
 
     const addSubtopic = (id: number) => {
-        const {topic, setTopic} = topics[id];
+        const topic = topics[id];
 
+        if (topic !== undefined) {
+            const subTopics = topic.subTopics.concat(data);
+
+            const newTopics = [...topics];
+
+            newTopics[id] = {
+                ...topic,
+                subTopics
+            };
+
+            setTopics(newTopics);
+        } else {
+            console.error("Undefined topic");
+        }
+
+    };
+
+    const generateHtml = () => {
+        return topics.map((topic: TopicProps) => {
+            return (<Topic {...topic} key={topic.number}/>)
+        })
     };
 
     return (
         <div className="App">
             <header className="App-header">
-                <img src={logo} className="App-logo" alt="logo"/>
-                <p>
-                    Edit <code>src/App.tsx</code> and save to reload.
-                </p>
-                <a
-                    className="App-link"
-                    href="https://reactjs.org"
-                    target="_blank"
-                    rel="noopener noreferrer"
-                >
-                    Learn React
-                </a>
+                <p>mikä homma</p>
             </header>
-            }
-            <button onClick={() => addSubtopic(0)}></button>
+
+            <div className="mail">
+                <button onClick={() => addSubtopic(0)}>click me mate</button>
+                {generateHtml()}
+            </div>
+
         </div>
     );
 };
