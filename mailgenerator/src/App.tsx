@@ -27,7 +27,7 @@ const App: React.FC = () => {
 
     const addSubtopic = (event: any) => {
         event.preventDefault();
-        
+        console.log(event);
         const id = 0;
 
         const topic = topics[id];
@@ -62,10 +62,9 @@ const App: React.FC = () => {
             </header>
 
             <div>
-                <AddSubtopic onSubmit={addSubtopic}/>
+                <AddSubtopic onSubmit={addSubtopic} topics={topics}/>
             </div>
             <div className="mail">
-                <button onClick={() => addSubtopic(0)}>click me mate</button>
                 {generateHtml()}
             </div>
 
