@@ -7,4 +7,5 @@ export interface SubTopicProps {
     registration: boolean;
     registrationStart?: Date;
     registrationEnd?: Date;
+    topic: string;
 }

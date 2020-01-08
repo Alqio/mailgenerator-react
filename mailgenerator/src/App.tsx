@@ -14,7 +14,8 @@ const App: React.FC = () => {
         date: new Date(),
         picture: "https://tietokilta.fi/page_attachments/0000/0265/otatarhanajot2013_crop.jpg",
         url: "https://tietokilta.fi",
-        registration: false
+        registration: false,
+        topic: "Kilta"
     };
 
     const topic1: TopicProps = {
@@ -22,20 +23,29 @@ const App: React.FC = () => {
         number: 1,
         subTopics: []
     };
+    const topic2: TopicProps = {
+        name: "Ayy & Aalto",
+        number: 2,
+        subTopics: []
+    };
 
-    const [topics, setTopics] = useState<Array<TopicProps>>([topic1]);
+    const [topics, setTopics] = useState<Array<TopicProps>>([topic1, topic2]);
 
-    const addSubtopic = (event: any) => {
-        event.preventDefault();
-        console.log(event);
-        const id = 0;
+    const addSubtopic = (subtopic: SubTopicProps) => {
+        console.log(subtopic);
 
-        const topic = topics[id];
 
-        if (topic !== undefined) {
-            const subTopics = topic.subTopics.concat(data);
+        if (subtopic.topic !== undefined) {
+
+            const topic = topics.filter((topic: TopicProps) => {
+                return topic.name === subtopic.topic;
+            })[0];
+
+            const subTopics = topic.subTopics.concat(subtopic);
 
             const newTopics = [...topics];
+
+            const id = topics.indexOf(topic);
 
             newTopics[id] = {
                 ...topic,

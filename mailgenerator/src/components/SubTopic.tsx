@@ -12,7 +12,8 @@ export const SubTopic = (props: SubTopicProps) => {
         url,
         registration,
         registrationStart,
-        registrationEnd
+        registrationEnd,
+        topic
     } = props;
 
     return (

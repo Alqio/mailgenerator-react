@@ -9,7 +9,8 @@ export const AddSubtopic = (props: AddSubTopicProps) => {
     const [state, setState] = useState<SubTopicProps>({
         name: "",
         text: "",
-        registration: false
+        registration: false,
+        topic: ""
     });
 
     const topicList = () => {
@@ -20,28 +21,56 @@ export const AddSubtopic = (props: AddSubTopicProps) => {
 
     const handleInputChange = (event: any) => {
         const target = event.target;
-        const value = target.value;
-        const name = target.name;
+        let value = target.type === 'checkbox' ? target.checked : target.value;
+        const n = target.name;
+
+        console.log("n", n);
+        // drops number from name
+        if (n === "topic") {
+            value = value.substring(3);
+        }
+
+        console.log("input changed");
+        console.log(event);
 
         setState({
-            [name]: value
-        })
+            ...state,
+            [n]: value
+        });
+
     };
 
     const onSubmit = (event: any) => {
-          event.preventDefault();
-
+        event.preventDefault();
+        props.onSubmit(state);
     };
 
     return (
         <>
             <h2>Add a subtopic</h2>
-            <form onSubmit={props.onSubmit}>
-                Name: <input placeholder="name" name="text" value={state.text} onChange={handleInputChange}></input>
-                <br></br>
-                Text: <textarea onChange={handleInputChange}></textarea>
+            <form onSubmit={onSubmit}>
+                Name:
+                <input
+                    placeholder="name"
+                    name="name"
+                    value={state.name}
+                    onChange={handleInputChange}>
+                </input>
 
-                <select name="topic-select" onChange={handleInputChange}>
+                <br></br>
+
+                Text:
+                <textarea
+                    name="text"
+                    value={state.text}
+                    onChange={handleInputChange}>
+                </textarea>
+
+                <select
+                    name="topic"
+                    value={state.topic}
+                    onChange={handleInputChange}
+                >
                     {topicList()}
                 </select>
 
