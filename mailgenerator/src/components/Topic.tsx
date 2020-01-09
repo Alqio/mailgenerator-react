@@ -15,6 +15,7 @@ export const Topic = (props: TopicProps) => {
                 <h1>{number}. {name}</h1>
             </>
         );
+        //TODO: add subtopic number
         const subtopicHtml = subTopics.map((subTopic: SubTopicProps) => {
             return (
                 <SubTopic {...subTopic} key={subTopic.name}/>

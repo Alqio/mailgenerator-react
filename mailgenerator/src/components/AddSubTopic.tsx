@@ -10,7 +10,7 @@ export const AddSubtopic = (props: AddSubTopicProps) => {
         name: "",
         text: "",
         registration: false,
-        topic: ""
+        topic: "Kilta"
     });
 
     const topicList = () => {
