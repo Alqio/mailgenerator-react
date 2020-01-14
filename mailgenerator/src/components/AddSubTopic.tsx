@@ -10,14 +10,17 @@ export const AddSubtopic = (props: AddSubTopicProps) => {
         name: "",
         text: "",
         registration: false,
-        topic: "Kilta"
+        topic: props.topics[0]
     });
 
     const topicList = () => {
+        console.log("in topic list");
         return props.topics.map((topic: TopicProps) => {
-            return (<option key={"topic-key-" + topic.number}>{topic.number}. {topic.name}</option>)
+            return (<option key={"topic-key-" + topic.number} value={topic.name}>{topic.number}. {topic.name}</option>)
         })
     };
+
+    const topics = [...topicList()];
 
     const handleInputChange = (event: any) => {
         const target = event.target;
@@ -25,18 +28,22 @@ export const AddSubtopic = (props: AddSubTopicProps) => {
         const n = target.name;
 
         console.log("n", n);
+
         // drops number from name
         if (n === "topic") {
-            value = value.substring(3);
+            value = props.topics.filter((topic: TopicProps) => {
+                return topic.name === value;
+            })[0]
         }
 
-        console.log("input changed");
-        console.log(event);
+        console.log(value);
 
         setState({
             ...state,
             [n]: value
         });
+
+        console.log(state);
 
     };
 
@@ -47,6 +54,7 @@ export const AddSubtopic = (props: AddSubTopicProps) => {
 
     return (
         <>
+            <button>log state</button>
             <h2>Add a subtopic</h2>
             <form onSubmit={onSubmit}>
                 Name:
@@ -68,10 +76,10 @@ export const AddSubtopic = (props: AddSubTopicProps) => {
 
                 <select
                     name="topic"
-                    value={state.topic}
+                    value={state.topic.name}
                     onChange={handleInputChange}
                 >
-                    {topicList()}
+                    {topics}
                 </select>
 
                 <button type="submit">Add a subtopic</button>

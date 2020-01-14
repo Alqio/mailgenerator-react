@@ -8,16 +8,6 @@ import {AddSubtopic} from "./components/AddSubTopic";
 
 const App: React.FC = () => {
 
-    const data: SubTopicProps = {
-        name: "Fuksisitsit",
-        text: "Haha tää on muuten ihan hauska tapahtuma kantsii ehdottomasti osallistua koska saa halpaa viinaa ja vaikka mitä",
-        date: new Date(),
-        picture: "https://tietokilta.fi/page_attachments/0000/0265/otatarhanajot2013_crop.jpg",
-        url: "https://tietokilta.fi",
-        registration: false,
-        topic: "Kilta"
-    };
-
     const topic1: TopicProps = {
         name: "Kilta",
         number: 1,
@@ -29,6 +19,16 @@ const App: React.FC = () => {
         subTopics: []
     };
 
+    const data: SubTopicProps = {
+        name: "Fuksisitsit",
+        text: "Haha tää on muuten ihan hauska tapahtuma kantsii ehdottomasti osallistua koska saa halpaa viinaa ja vaikka mitä",
+        date: new Date(),
+        picture: "https://tietokilta.fi/page_attachments/0000/0265/otatarhanajot2013_crop.jpg",
+        url: "https://tietokilta.fi",
+        registration: false,
+        topic: topic1
+    };
+
     const [topics, setTopics] = useState<Array<TopicProps>>([topic1, topic2]);
 
     const addSubtopic = (subtopic: SubTopicProps) => {
@@ -38,7 +38,7 @@ const App: React.FC = () => {
         if (subtopic.topic !== undefined) {
 
             const topic = topics.filter((topic: TopicProps) => {
-                return topic.name === subtopic.topic;
+                return topic.name === subtopic.topic.name;
             })[0];
 
             const subTopics = topic.subTopics.concat(subtopic);
