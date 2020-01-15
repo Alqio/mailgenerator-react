@@ -5,6 +5,7 @@ import {SubTopicProps} from "./types/SubTopic";
 import {Topic} from "./components/Topic";
 import {TopicHook, TopicProps} from "./types/Topic";
 import {AddSubtopic} from "./components/AddSubTopic";
+import moment from "moment";
 
 const App: React.FC = () => {
 
@@ -22,7 +23,7 @@ const App: React.FC = () => {
     const data: SubTopicProps = {
         name: "Fuksisitsit",
         text: "Haha tää on muuten ihan hauska tapahtuma kantsii ehdottomasti osallistua koska saa halpaa viinaa ja vaikka mitä",
-        date: new Date(),
+        date: moment(),
         picture: "https://tietokilta.fi/page_attachments/0000/0265/otatarhanajot2013_crop.jpg",
         url: "https://tietokilta.fi",
         registration: false,
@@ -72,7 +73,7 @@ const App: React.FC = () => {
             </header>
 
             <div>
-                <AddSubtopic onSubmit={addSubtopic} topics={topics}/>
+                <AddSubtopic onSubmit={addSubtopic} topics={topics} datePickerFocused={false}/>
             </div>
             <div className="mail">
                 {generateHtml()}

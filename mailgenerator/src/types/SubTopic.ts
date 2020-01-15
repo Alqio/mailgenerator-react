@@ -1,13 +1,15 @@
 import {TopicProps} from "./Topic";
+import {Moment} from "moment";
 
 export interface SubTopicProps {
     name: string;
     text: string;
-    date?: Date;
+    date?: Moment;
     url?: string;
     picture?: string;
     registration: boolean;
-    registrationStart?: Date;
-    registrationEnd?: Date;
+    registrationStart?: Moment;
+    registrationEnd?: Moment;
     topic: TopicProps;
+    number?: number
 }

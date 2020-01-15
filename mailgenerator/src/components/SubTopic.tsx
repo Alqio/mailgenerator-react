@@ -13,17 +13,18 @@ export const SubTopic = (props: SubTopicProps) => {
         registration,
         registrationStart,
         registrationEnd,
-        topic
+        topic,
+        number
     } = props;
 
     return (
         <div>
-            <h2>{name} {(date ? date.toDateString() : "")}</h2>
+            <h2>{number}. {name} {(date ? date.toISOString() : "")}</h2>
             <p>{text}</p>
             <br/>
             <br/>
             <a href={url}>Lue lisää</a>
-            <img src={(picture ? picture : "")}/>
+            <img src={(picture ? picture : "")}></img>
         </div>
     )
 };
