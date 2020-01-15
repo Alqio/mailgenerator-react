@@ -83,17 +83,26 @@ const App: React.FC = () => {
                 <p>mikä homma</p>
             </header>
 
-            <div>
-                <AddTopic onSubmit={addTopic}/>
-            </div>
-            <br/>
-            <div>
-                <AddSubtopic onSubmit={addSubtopic} topics={topics} datePickerFocused={false} dateRangePickerFocused={null}/>
+            <div className="container">
+                <div className="admin">
+                    <div>
+                        <AddTopic onSubmit={addTopic}/>
+                    </div>
+
+                    <br/>
+
+                    <div>
+                        <AddSubtopic onSubmit={addSubtopic} topics={topics} datePickerFocused={false} dateRangePickerFocused={null}/>
+                    </div>
+                </div>
+
+                <div className="mail">
+                    {generateHtml()}
+                </div>
+
             </div>
 
-            <div className="mail">
-                {generateHtml()}
-            </div>
+
 
         </div>
     );
