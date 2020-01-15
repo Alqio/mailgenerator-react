@@ -41,6 +41,8 @@ export const SubTopic = (props: SubTopicProps) => {
             <br/>
             <a href={url}>Lue lisää</a>
             {registrationElements()}
+            <br/>
+            <br/>
             <img src={(picture ? picture : "")}></img>
         </div>
     )

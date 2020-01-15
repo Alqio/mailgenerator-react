@@ -125,13 +125,6 @@ export const AddSubtopic = (props: AddSubTopicProps) => {
 
                 URL: <input name="url" value={subtopicState.url} onChange={handleInputChange}></input>
                 <br></br>
-                Registration <input
-                    type="checkbox"
-                    name="registration"
-                    onChange={handleInputChange}>
-                 </input>
-                <br></br>
-
 
                 Date: <SingleDatePicker
                     date={subtopicState.date ? subtopicState.date : null} // momentPropTypes.momentObj or null
@@ -150,9 +143,17 @@ export const AddSubtopic = (props: AddSubTopicProps) => {
 
                 <button onClick={(event) => removeDateFromSubtopicState(event)}>Clear date</button>
 
+                <br></br>
 
-                Registration time:
-                <DateRangePicker
+                Registration <input
+                    type="checkbox"
+                    name="registration"
+                    onChange={handleInputChange}>
+                </input>
+
+                <br></br>
+
+                Registration time: <DateRangePicker
                     startDate={subtopicState.registrationStart ? subtopicState.registrationStart : null} // momentPropTypes.momentObj or null,
                     startDateId="start_date" // PropTypes.string.isRequired,
                     endDate={subtopicState.registrationEnd ? subtopicState.registrationEnd : null} // momentPropTypes.momentObj or null,
@@ -170,6 +171,9 @@ export const AddSubtopic = (props: AddSubTopicProps) => {
 
                 <br></br>
 
+                Image link: <input name="picture" value={subtopicState.picture} onChange={handleInputChange} placeholder="picture url"></input>
+
+                <br></br>
                 <button type="submit">Add a subtopic</button>
             </form>
         </div>

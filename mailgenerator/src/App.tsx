@@ -1,11 +1,11 @@
 import React, {useState} from 'react';
-import logo from './logo.svg';
 import './App.css';
 import {SubTopicProps} from "./types/SubTopic";
 import {Topic} from "./components/Topic";
-import {TopicHook, TopicProps} from "./types/Topic";
+import {TopicProps} from "./types/Topic";
 import {AddSubtopic} from "./components/AddSubTopic";
 import moment from "moment";
+import {AddTopic} from "./components/AddTopic";
 
 const App: React.FC = () => {
 
@@ -32,9 +32,20 @@ const App: React.FC = () => {
 
     const [topics, setTopics] = useState<Array<TopicProps>>([topic1, topic2]);
 
+    const addTopic = (topic: TopicProps) => {
+        console.log(topic);
+        topic.subTopics = [];
+
+        const newTopics = topics.concat(topic).sort((a: TopicProps, b:TopicProps) => {
+            return a.number > b.number ? 1 : -1;
+        });
+
+        setTopics(newTopics);
+
+    };
+
     const addSubtopic = (subtopic: SubTopicProps) => {
         console.log(subtopic);
-
 
         if (subtopic.topic !== undefined) {
 
@@ -73,8 +84,13 @@ const App: React.FC = () => {
             </header>
 
             <div>
+                <AddTopic onSubmit={addTopic}/>
+            </div>
+            <br/>
+            <div>
                 <AddSubtopic onSubmit={addSubtopic} topics={topics} datePickerFocused={false} dateRangePickerFocused={null}/>
             </div>
+
             <div className="mail">
                 {generateHtml()}
             </div>

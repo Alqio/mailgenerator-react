@@ -5,7 +5,3 @@ export interface TopicProps {
     number: number;
     subTopics: Array<SubTopicProps>;
 }
-export interface TopicHook {
-    topic: TopicProps;
-    setTopic: any;
-}
