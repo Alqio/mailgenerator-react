@@ -33,10 +33,10 @@ export const Topic = (props: TopicProps) => {
                 <h1>{number}. {name}</h1>
             </>
         );
-        //TODO: add subtopic number
+
         const subtopicHtml = sortSubtopics(subTopics).map((subTopic: SubTopicProps, number: number) => {
             return (
-                <SubTopic {...subTopic} number={number+1} key={subTopic.name}/>
+                <SubTopic {...subTopic} number={number+1} key={subTopic.name + "-" + (number+1)}/>
             )
         });
         return (<>{ownHtml} <br/> {subtopicHtml}</>)

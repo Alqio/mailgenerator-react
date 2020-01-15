@@ -73,7 +73,7 @@ const App: React.FC = () => {
             </header>
 
             <div>
-                <AddSubtopic onSubmit={addSubtopic} topics={topics} datePickerFocused={false}/>
+                <AddSubtopic onSubmit={addSubtopic} topics={topics} datePickerFocused={false} dateRangePickerFocused={null}/>
             </div>
             <div className="mail">
                 {generateHtml()}

@@ -6,6 +6,8 @@ import 'react-dates/initialize';
 import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
 import {Moment} from "moment";
 
+import 'react-dates/lib/css/_datepicker.css';
+
 export const AddSubtopic = (props: AddSubTopicProps) => {
 
     const [subtopicState, setSubtopicState] = useState<SubTopicProps>({
@@ -63,17 +65,39 @@ export const AddSubtopic = (props: AddSubTopicProps) => {
         }
     };
 
+    const onDateRangeChange = (startDate: Moment|null, endDate: Moment|null) => {
+        if (startDate) {
+            setSubtopicState({
+                ...subtopicState,
+                registrationStart: startDate
+            });
+        }
+        if (endDate) {
+            setSubtopicState({
+                ...subtopicState,
+                registrationEnd: endDate
+            });
+        }
+    };
+
+    const removeDateFromSubtopicState = (event: any) => {
+        event.preventDefault();
+        setSubtopicState({
+            ...subtopicState,
+            date: undefined
+        });
+    };
+
     const onSubmit = (event: any) => {
         event.preventDefault();
         props.onSubmit(subtopicState);
     };
 
     return (
-        <>
+        <div>
             <h2>Add a subtopic</h2>
             <form onSubmit={onSubmit}>
-                Name:
-                <input
+                Name: <input
                     placeholder="name"
                     name="name"
                     value={subtopicState.name}
@@ -82,12 +106,13 @@ export const AddSubtopic = (props: AddSubTopicProps) => {
 
                 <br></br>
 
-                Text:
-                <textarea
+                Text: <textarea
                     name="text"
                     value={subtopicState.text}
                     onChange={handleInputChange}>
                 </textarea>
+
+                <br></br>
 
                 <select
                     name="topic"
@@ -96,7 +121,19 @@ export const AddSubtopic = (props: AddSubTopicProps) => {
                 >
                     {topics}
                 </select>
-                <SingleDatePicker
+                <br></br>
+
+                URL: <input name="url" value={subtopicState.url} onChange={handleInputChange}></input>
+                <br></br>
+                Registration <input
+                    type="checkbox"
+                    name="registration"
+                    onChange={handleInputChange}>
+                 </input>
+                <br></br>
+
+
+                Date: <SingleDatePicker
                     date={subtopicState.date ? subtopicState.date : null} // momentPropTypes.momentObj or null
                     onDateChange={date => onDateChange(date)} // PropTypes.func.isRequired
                     focused={state.datePickerFocused} // PropTypes.bool
@@ -110,8 +147,31 @@ export const AddSubtopic = (props: AddSubTopicProps) => {
                     }} // PropTypes.func.isRequired
                     id="date picker" // PropTypes.string.isRequired,
                 />
+
+                <button onClick={(event) => removeDateFromSubtopicState(event)}>Clear date</button>
+
+
+                Registration time:
+                <DateRangePicker
+                    startDate={subtopicState.registrationStart ? subtopicState.registrationStart : null} // momentPropTypes.momentObj or null,
+                    startDateId="start_date" // PropTypes.string.isRequired,
+                    endDate={subtopicState.registrationEnd ? subtopicState.registrationEnd : null} // momentPropTypes.momentObj or null,
+                    endDateId="end_date" // PropTypes.string.isRequired,
+                    onDatesChange={({ startDate, endDate }) => onDateRangeChange(startDate, endDate)} // PropTypes.func.isRequired,
+                    focusedInput={state.dateRangePickerFocused} // PropTypes.oneOf([START_DATE, END_DATE]) or null,
+                    onFocusChange={focusedInput => {
+                        if (focusedInput) {
+                            setState({...state, dateRangePickerFocused: focusedInput})
+                        } else {
+                            setState({...state, dateRangePickerFocused: null})
+                        }
+                    }}
+                />
+
+                <br></br>
+
                 <button type="submit">Add a subtopic</button>
             </form>
-        </>
+        </div>
     )
 };
