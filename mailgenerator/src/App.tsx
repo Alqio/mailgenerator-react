@@ -1,4 +1,4 @@
-import React, {useState} from 'react';
+import React, {useEffect, useState} from 'react';
 import './App.css';
 import {SubTopicProps} from "./types/SubTopic";
 import {Topic} from "./components/Topic";
@@ -6,7 +6,7 @@ import {TopicProps} from "./types/Topic";
 import {AddSubtopic} from "./components/AddSubTopic";
 import moment from "moment";
 import {AddTopic} from "./components/AddTopic";
-
+import axios from 'axios';
 const App: React.FC = () => {
 
     const topic1: TopicProps = {
@@ -30,7 +30,17 @@ const App: React.FC = () => {
         topic: topic1
     };
 
+    const API_URL = "http://localhost:3001";
+
     const [topics, setTopics] = useState<Array<TopicProps>>([topic1, topic2]);
+
+    useEffect(() => {
+       axios.get(`${API_URL}/topic`).then(res => {
+           console.log(res);
+           const t = res.data;
+           setTopics(t);
+       });
+    });
 
     const addTopic = (topic: TopicProps) => {
         console.log(topic);
@@ -73,7 +83,7 @@ const App: React.FC = () => {
 
     const generateHtml = () => {
         return topics.map((topic: TopicProps) => {
-            return (<Topic {...topic} key={topic.number}/>)
+            return (<Topic {...topic} key={topic.name + "-" + topic.number}/>)
         })
     };
 
