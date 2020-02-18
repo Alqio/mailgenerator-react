@@ -35,12 +35,27 @@ const App: React.FC = () => {
     const [topics, setTopics] = useState<Array<TopicProps>>([topic1, topic2]);
 
     useEffect(() => {
-       axios.get(`${API_URL}/topic`).then(res => {
-           console.log(res);
-           const t = res.data;
-           setTopics(t);
+        axios.get(`${API_URL}/topic`).then(res => {
+            const topicsData = res.data;
+            console.log("topics:", topicsData);
+
+            axios.get(`${API_URL}/subtopic`).then(res => {
+                const subtopicsData = res.data;
+                for (let i = 0; i < subtopicsData.length; i++) {
+                    console.log(subtopicsData[i]);
+                    const topic = topicsData.find((topic: any) => topic.name === subtopicsData[i].topic);
+
+                    if (!topic.subtopics) {
+                        topic.subtopics = []
+                    }
+                    topic.subtopics.push(subtopicsData[i]);
+                    console.log(topic);
+                }
+                setTopics(topicsData);
+                console.log(topics);
+            });
        });
-    });
+    }, []); //adding [] makes sure useEffect is called only once
 
     const addTopic = (topic: TopicProps) => {
         console.log(topic);

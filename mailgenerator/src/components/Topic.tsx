@@ -12,6 +12,8 @@ export const Topic = (props: TopicProps) => {
 
     const sortSubtopics = (subtopics: Array<SubTopicProps>) => {
         console.log("subtopics:", subtopics);
+        if (!subtopics) return [];
+
         return subtopics.sort((a: SubTopicProps, b: SubTopicProps) => {
             let aDate = a.date;
             let bDate = b.date;
