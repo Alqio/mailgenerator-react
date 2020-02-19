@@ -3,4 +3,4 @@ This is the frontend of a mailgenerator project. Currently it has nos integratio
 This project is made with React and TypeScript.
 
 ## Setting up
-This project is curerntly not running in docker, so you need to manually install dependencies with npm. Then you can run the project with npm start.
+Simply running docker-compose up should be sufficient. The project is running on port 3000.
