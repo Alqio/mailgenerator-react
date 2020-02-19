@@ -1,7 +1,7 @@
 import {TopicProps} from "./Topic";
 import {Moment} from "moment";
 
-export interface SubTopicProps {
+export interface SubtopicProps {
     name: string;
     text: string;
     date?: Moment;

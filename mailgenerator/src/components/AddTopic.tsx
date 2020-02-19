@@ -7,7 +7,7 @@ export const AddTopic = (props: AddTopicProps) => {
     const [topicState, setTopicState] = useState<TopicProps>({
         name: "",
         number: 0,
-        subTopics: []
+        subtopics: []
     });
 
     const handleInputChange = (event: any) => {

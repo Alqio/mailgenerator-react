@@ -1,9 +1,9 @@
 import React from 'react';
-import {SubTopicProps} from "../types/SubTopic";
+import {SubtopicProps} from "../types/SubTopic";
 import {Moment} from "moment";
 
 
-export const SubTopic = (props: SubTopicProps) => {
+export const SubTopic = (props: SubtopicProps) => {
 
     const {
         name,
@@ -39,7 +39,7 @@ export const SubTopic = (props: SubTopicProps) => {
             <p>{text}</p>
             <br/>
             <br/>
-            <a href={url}>Lue lisää</a>
+            <a href={url}>{(url ? "Lue lisää": "")}</a>
             {registrationElements()}
             <br/>
             <br/>

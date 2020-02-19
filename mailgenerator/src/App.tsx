@@ -1,26 +1,27 @@
 import React, {useEffect, useState} from 'react';
 import './App.css';
-import {SubTopicProps} from "./types/SubTopic";
+import {SubtopicProps} from "./types/SubTopic";
 import {Topic} from "./components/Topic";
 import {TopicProps} from "./types/Topic";
 import {AddSubtopic} from "./components/AddSubTopic";
 import moment from "moment";
 import {AddTopic} from "./components/AddTopic";
-import axios from 'axios';
+import {fetchTopicsAndSubtopics, addTopicToBackend, addSubtopicToBackend} from "./datahelpers/topicDataHelper";
+
 const App: React.FC = () => {
 
     const topic1: TopicProps = {
         name: "Kilta",
         number: 1,
-        subTopics: []
+        subtopics: []
     };
     const topic2: TopicProps = {
         name: "Ayy & Aalto",
         number: 2,
-        subTopics: []
+        subtopics: []
     };
 
-    const data: SubTopicProps = {
+    const data: SubtopicProps = {
         name: "Fuksisitsit",
         text: "Haha tää on muuten ihan hauska tapahtuma kantsii ehdottomasti osallistua koska saa halpaa viinaa ja vaikka mitä",
         date: moment(),
@@ -30,70 +31,39 @@ const App: React.FC = () => {
         topic: topic1
     };
 
-    const API_URL = "http://localhost:3001";
-
     const [topics, setTopics] = useState<Array<TopicProps>>([topic1, topic2]);
 
     useEffect(() => {
-        axios.get(`${API_URL}/topic`).then(res => {
-            const topicsData = res.data;
-            console.log("topics:", topicsData);
-
-            axios.get(`${API_URL}/subtopic`).then(res => {
-                const subtopicsData = res.data;
-                for (let i = 0; i < subtopicsData.length; i++) {
-                    console.log(subtopicsData[i]);
-                    const topic = topicsData.find((topic: any) => topic.name === subtopicsData[i].topic);
-
-                    if (!topic.subtopics) {
-                        topic.subtopics = []
-                    }
-                    topic.subtopics.push(subtopicsData[i]);
-                    console.log(topic);
-                }
-                setTopics(topicsData);
-                console.log(topics);
-            });
-       });
+        fetchTopicsAndSubtopics(setTopics);
     }, []); //adding [] makes sure useEffect is called only once
 
     const addTopic = (topic: TopicProps) => {
         console.log(topic);
-        topic.subTopics = [];
+        topic.subtopics = [];
 
-        const newTopics = topics.concat(topic).sort((a: TopicProps, b:TopicProps) => {
-            return a.number > b.number ? 1 : -1;
-        });
+        const callback = (addedTopic: TopicProps) => {
+            const newTopics = topics.concat(addedTopic).sort((a: TopicProps, b: TopicProps) => {
+                return a.number > b.number ? 1 : -1;
+            });
 
-        setTopics(newTopics);
+            setTopics(newTopics);
+        };
+
+        addTopicToBackend(topic, callback);
 
     };
 
-    const addSubtopic = (subtopic: SubTopicProps) => {
+    const addSubtopic = async (subtopic: SubtopicProps) => {
         console.log(subtopic);
 
         if (subtopic.topic !== undefined) {
-
-            const topic = topics.filter((topic: TopicProps) => {
-                return topic.name === subtopic.topic.name;
-            })[0];
-
-            const subTopics = topic.subTopics.concat(subtopic);
-
-            const newTopics = [...topics];
-
-            const id = topics.indexOf(topic);
-
-            newTopics[id] = {
-                ...topic,
-                subTopics
-            };
+            const newTopics = await addSubtopicToBackend(subtopic, topics);
 
             setTopics(newTopics);
+
         } else {
             console.error("Undefined topic");
         }
-
     };
 
     const generateHtml = () => {
@@ -117,7 +87,8 @@ const App: React.FC = () => {
                     <br/>
 
                     <div>
-                        <AddSubtopic onSubmit={addSubtopic} topics={topics} datePickerFocused={false} dateRangePickerFocused={null}/>
+                        <AddSubtopic onSubmit={addSubtopic} topics={topics} datePickerFocused={false}
+                                     dateRangePickerFocused={null}/>
                     </div>
                 </div>
 

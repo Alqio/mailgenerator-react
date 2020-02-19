@@ -1,7 +1,7 @@
 import {AddSubTopicProps} from "../types/AddSubTopic";
 import React, {useEffect, useState} from 'react';
 import {TopicProps} from "../types/Topic";
-import {SubTopicProps} from "../types/SubTopic";
+import {SubtopicProps} from "../types/SubTopic";
 import 'react-dates/initialize';
 import { DateRangePicker, SingleDatePicker, DayPickerRangeController } from 'react-dates';
 import {Moment} from "moment";
@@ -10,7 +10,7 @@ import 'react-dates/lib/css/_datepicker.css';
 
 export const AddSubtopic = (props: AddSubTopicProps) => {
 
-    const [subtopicState, setSubtopicState] = useState<SubTopicProps>({
+    const [subtopicState, setSubtopicState] = useState<SubtopicProps>({
         name: "",
         text: "",
         registration: false,
@@ -90,14 +90,18 @@ export const AddSubtopic = (props: AddSubTopicProps) => {
 
     const onSubmit = (event: any) => {
         event.preventDefault();
+
+        console.log(subtopicState);
+
         props.onSubmit(subtopicState);
     };
 
     return (
         <div>
             <h2>Add a subtopic</h2>
+            <p>Required marked with *</p>
             <form onSubmit={onSubmit}>
-                Name: <input
+                * Name: <input
                     placeholder="name"
                     name="name"
                     value={subtopicState.name}
@@ -114,7 +118,7 @@ export const AddSubtopic = (props: AddSubTopicProps) => {
 
                 <br></br>
 
-                <select
+                * Topic <select
                     name="topic"
                     value={subtopicState.topic.name}
                     onChange={handleInputChange}
@@ -145,7 +149,7 @@ export const AddSubtopic = (props: AddSubTopicProps) => {
 
                 <br></br>
 
-                Registration <input
+                * Registration <input
                     type="checkbox"
                     name="registration"
                     onChange={handleInputChange}>

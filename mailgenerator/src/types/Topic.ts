@@ -1,7 +1,7 @@
-import {SubTopicProps} from "./SubTopic";
+import {SubtopicProps} from "./SubTopic";
 
 export interface TopicProps {
     name: string;
     number: number;
-    subTopics: Array<SubTopicProps>;
+    subtopics: Array<SubtopicProps>;
 }

@@ -1,20 +1,19 @@
 import React, {useState} from 'react'
 import {SubTopic} from "./SubTopic";
 import {TopicProps} from "../types/Topic";
-import {SubTopicProps} from "../types/SubTopic";
+import {SubtopicProps} from "../types/SubTopic";
 import moment from "moment";
 
 export const Topic = (props: TopicProps) => {
-    const {name, number, subTopics} = props;
+    const {name, number, subtopics} = props;
 
     //List of dictionaries, 1 dict = 1 subtopic. Does not contain actual subtopic elements
     //const [subTopics, setSubTopics] = useState<Array<SubTopicProps>>([]);
 
-    const sortSubtopics = (subtopics: Array<SubTopicProps>) => {
-        console.log("subtopics:", subtopics);
+    const sortSubtopics = (subtopics: Array<SubtopicProps>) => {
         if (!subtopics) return [];
 
-        return subtopics.sort((a: SubTopicProps, b: SubTopicProps) => {
+        return subtopics.sort((a: SubtopicProps, b: SubtopicProps) => {
             let aDate = a.date;
             let bDate = b.date;
 
@@ -37,7 +36,7 @@ export const Topic = (props: TopicProps) => {
             </>
         );
 
-        const subtopicHtml = sortSubtopics(subTopics).map((subTopic: SubTopicProps, number: number) => {
+        const subtopicHtml = sortSubtopics(subtopics).map((subTopic: SubtopicProps, number: number) => {
             return (
                 <SubTopic {...subTopic} number={number+1} key={subTopic.name + "-" + (number+1)}/>
             )
