@@ -1,7 +1,6 @@
 import axios from "axios";
 import {TopicProps} from "../types/Topic";
 import {SubtopicProps} from "../types/SubTopic";
-import moment from "moment";
 import {formatDateKeys} from "../helpers/subtopicHelper";
 
 const API_URL = "http://localhost:3001";
@@ -34,12 +33,10 @@ export const fetchTopicsAndSubtopics = async (callback: any) => {
     callback(topicsData);
 };
 
-export const addTopicToBackend = async (topicData: TopicProps, callback: any) => {
+export const addTopicToBackend = async (topicData: TopicProps) => {
     const response = await axios.post(`${API_URL}/topic`, topicData);
     console.log(response);
-    const addedTopic = response.data;
-
-    callback(addedTopic);
+    return response.data;
 
 };
 

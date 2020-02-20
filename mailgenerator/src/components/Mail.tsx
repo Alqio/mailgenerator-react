@@ -20,20 +20,17 @@ export const Mail = (props: MailProps) => {
         fetchTopicsAndSubtopics(setTopics);
     }, []);
 
-    const addTopic = (topic: TopicProps) => {
+    const addTopic = async (topic: TopicProps) => {
         console.log(topic);
         topic.subtopics = [];
 
-        const callback = (addedTopic: TopicProps) => {
-            const newTopics = topics.concat(addedTopic).sort((a: TopicProps, b: TopicProps) => {
-                return a.number > b.number ? 1 : -1;
-            });
+        const addedTopic = await addTopicToBackend(topic);
 
-            setTopics(newTopics);
-        };
+        const newTopics = topics.concat(addedTopic).sort((a: TopicProps, b: TopicProps) => {
+            return a.number > b.number ? 1 : -1;
+        });
 
-        addTopicToBackend(topic, callback);
-
+        setTopics(newTopics);
     };
 
     const addSubtopic = async (subtopic: SubtopicProps) => {
